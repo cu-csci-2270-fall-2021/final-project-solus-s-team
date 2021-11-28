@@ -69,24 +69,72 @@ double test_x::max_grade = 100;
 // Tests start here
 /////////////////////////////////////////
 
+
 TEST_F(test_x, TestInsert){
-    
     
     string result;
     string expected;
-       
-    int len = 5;
     
-    string commits[] = {"computer", "science", "fun", "difficult", "science"};
+    
+    //Test 1 (pre-written)
+    string commits1[] = {"computer", "science", "fun", "difficult", "science"};
+    int len = 5;
     int tabSize = 5;
     
-    result = test_insert(commits, len, tabSize);
-    
+    result = test_insert(commits1, len, tabSize);
     expected = "0|| science(1,4,)\n1|| \n2|| \n3|| \n4|| difficult(3,)-->fun(2,)-->computer(0,)\n";
-    
     ASSERT_EQ(expected, result);
-    add_points_to_grade(6);
-
+    add_points_to_grade(13.8);
+    
+    
+    //Test 2
+    string commits2[] = {"", " ", "  ", "   Whitespace is neat!    "};
+    len = 4;
+    
+    result = test_insert(commits2, len, tabSize);
+    expected = "Insert failed: Cannot use empty string as key.\nInsert failed: Cannot use whitespace as key.\nInsert failed: Cannot use whitespace as key.\n0|| \n1|| \n2||    Whitespace is neat!    (3,)\n3|| \n4|| \n";
+    ASSERT_EQ(expected, result);
+    add_points_to_grade(13.8);
+    
+    
+    //Test 3
+    string commits3[] = {"12345", "360 42", "#^Q%$^fg^&^A#"};
+    len = 3;
+    
+    result = test_insert(commits3, len, tabSize);
+    expected = "0|| 12345(0,)\n1|| \n2|| 360 42(1,)\n3|| #^Q%$^fg^&^A#(2,)\n4|| \n";
+    ASSERT_EQ(expected, result);
+    add_points_to_grade(13.8);
 }
 
-//TODO add more tests for insert. Design tests for search from hashTable.
+
+TEST_F(test_x, TestSearch){
+    
+    string result;
+    string expected;
+    
+    
+    //Test 1
+    string commits1[] = {"computer", "science", "fun", "difficult", "science"};
+    int commitLen = 5;
+    int tabSize = 5;
+    string searches1[] = {"science", "okay", "search", "fun"};
+    int searchLen = 4;
+    
+    result = test_search(commits1, commitLen, tabSize, searches1, searchLen);
+    expected = "Search result for science: Found!\nSearch result for okay: Not found!\nSearch result for search: Not found!\nSearch result for fun: Found!\n";
+    ASSERT_EQ(expected, result);
+    add_points_to_grade(13.8);
+    
+    
+    //Test 2
+    string commits2[] = {"13571987", "   ", "  Whitespace time again!  ", "%^%$#^%$@^%"};
+    commitLen = 4;
+    string searches2[] = {"13571987", "   ", "  Whitespace time again!  ", "Whitespace time again!", "%^%$#^%$@^%"};
+    searchLen = 5;
+    
+    result = test_search(commits2, commitLen, tabSize, searches2, searchLen);
+    expected = "Insert failed: Cannot use whitespace as key.\nSearch result for 13571987: Found!\nSearch result for    : Not found!\nSearch result for   Whitespace time again!  : Found!\nSearch result for Whitespace time again!: Not found!\nSearch result for %^%$#^%$@^%: Found!\n";
+    ASSERT_EQ(expected, result);
+    add_points_to_grade(13.8);
+}

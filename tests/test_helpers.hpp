@@ -13,4 +13,5 @@ using namespace std;
 std::string exec(const char* cmd);
 std::string readFileIntoString(std::string fileName);
 string test_insert(string arr[], int len, int tabSize);
+string test_search(string commitArr[], int commitLen, int tabSize, string searchArr[], int searchLen);
 #endif // TEST_H__

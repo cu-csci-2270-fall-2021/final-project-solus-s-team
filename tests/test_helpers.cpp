@@ -28,18 +28,42 @@ std::string readFileIntoString(std::string fileName){
 	return out;
 }
 
-string test_insert(string arr[], int len, int tabSize)
-{
+string test_insert(string arr[], int len, int tabSize){
     
     testing::internal::CaptureStdout();
     HashTable* ht = new HashTable(tabSize);
     
-    for(int i=0;i<len;i++)
-    {
-        ht->insertItem(arr[i],i);
+    for(int i = 0; i < len; i++){
+        ht->insertItem(arr[i], i);
     }
     
     ht->printTable();
+    string output = testing::internal::GetCapturedStdout();
+    return output;
+}
+
+string test_search(string commitArr[], int commitLen, int tabSize, string searchArr[], int searchLen){
+    
+    testing::internal::CaptureStdout();
+    HashTable* ht = new HashTable(tabSize);
+    
+    for(int i = 0; i < commitLen; i++){
+        ht->insertItem(commitArr[i], i);
+    }
+    
+    for(int i = 0; i < searchLen; i++){
+        HashNode* searchResult = ht->searchItem(searchArr[i]);
+        string equalityResult;
+        
+        if(searchResult != nullptr){
+            equalityResult = "Found!";
+        }else{
+            equalityResult = "Not found!";
+        }
+        
+        cout << "Search result for " << searchArr[i] << ": " << equalityResult << endl;
+    }
+    
     string output = testing::internal::GetCapturedStdout();
     return output;
 }
