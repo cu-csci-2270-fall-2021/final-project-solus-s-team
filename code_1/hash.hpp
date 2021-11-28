@@ -4,24 +4,24 @@
 #include <string>
 #include <vector>
 
-
 using namespace std;
 
-struct  HashNode //hash node datastructure
-{
+
+//hash node datastructure
+struct HashNode{
     string key;
     vector<int> commitNums;
     struct HashNode* next;
 };
 
-class HashTable
-{
+class HashTable{
     int tableSize;  // No. of buckets (linked lists)
 
     // Pointer to an array containing buckets
      HashNode* *table;
 
-     HashNode* createNode(string key, HashNode* next);
+     HashNode* createNode(string key, HashNode* next, int commitNum);
+    
 public:
     HashTable(int bsize);  // Constructor
 
@@ -35,5 +35,6 @@ public:
 
     HashNode* searchItem(string key);
 };
+
 
 #endif

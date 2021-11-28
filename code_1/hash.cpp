@@ -2,44 +2,91 @@
 #include<iostream>
 #include "hash.hpp"
 
-
 using namespace std;
 
-HashNode* HashTable::createNode(string key, HashNode* next)
-{
-    HashNode* nw = NULL;
-    return nw;
+
+HashNode* HashTable::createNode(string key, HashNode* next, int commitNum){
+    
+    HashNode* nn = new HashNode;
+    
+    nn->key = key;
+    nn->next = next;
+    nn->commitNums.push_back(commitNum);
+    
+    return nn;
 }
 
-HashTable::HashTable(int bsize)
-{
-   
+
+HashTable::HashTable(int bsize){
+    
+    this->tableSize = bsize;
+    table = new HashNode*[tableSize];
+    
+    for(int i = 0; i < tableSize; i++){
+        table[i] = nullptr;
+    }
 }
+
 
 //function to calculate hash function
-unsigned int HashTable::hashFunction(string s)
-{
+unsigned int HashTable::hashFunction(string s){
     
-    return 0;
+    unsigned int sum = 0;
+    
+    for(long unsigned int i = 0; i < s.length(); i++){
+        sum += (int)s[i];
+    }
+    
+    return (sum % tableSize);
 }
+
 
 // TODO Complete this function
 //function to search
-HashNode* HashTable::searchItem(string key)
-{
-   
-
-    //TODO
-    return NULL;
+HashNode* HashTable::searchItem(string key){
     
+    int index = hashFunction(key);
+    HashNode* curr = table[index];
+    
+    while(curr != nullptr){
+        if(curr->key == key){
+            return curr;
+        }
+        curr = curr->next;
+    }
+    
+    return curr;
 }
+
 
 //TODO Complete this function
 //function to insert
-bool HashTable::insertItem(string key, int cNum)
-{
+bool HashTable::insertItem(string key, int cNum){
     
-    //TODO
+    if(key.find_first_not_of(' ') != string::npos){
+        
+        HashNode* curr = searchItem(key);
+        
+        if(curr == nullptr){
+            
+            int index = hashFunction(key);
+            HashNode* nn = createNode(key, table[index], cNum);
+            table[index] = nn;
+            return true;
+        }
+        
+        curr->commitNums.push_back(cNum);
+        return true;
+        
+    }else if(key.empty()){
+        cout << "Insert failed: Cannot use empty string as key." << endl;
+        return false;
+        
+    }else{
+        cout << "Insert failed: Cannot use whitespace as key." << endl;
+        return false;
+    }
+    
     return false;
 }
 
@@ -57,7 +104,33 @@ bool HashTable::insertItem(string key, int cNum)
 4|| difficult(3,)-->fun(2,)-->computer(0,)
 
 */
-void HashTable::printTable()
-{
-
- }
+void HashTable::printTable(){
+    
+    for(int i = 0; i < tableSize; i++){
+        
+        cout << i << "|| ";
+        HashNode* curr = table[i];
+        
+        if(curr != nullptr){
+            
+            while(curr->next != nullptr){
+                
+                cout << curr->key << "(";
+                for(int commitNum : curr->commitNums){
+                    cout << commitNum << ",";
+                }
+                cout << ")-->";
+                
+                curr = curr->next;
+            }
+            
+            cout << curr->key << "(";
+            for(int commitNum : curr->commitNums){
+                cout << commitNum << ",";
+            }
+            cout << ")";
+        }
+        
+        cout << endl;
+    }
+}
