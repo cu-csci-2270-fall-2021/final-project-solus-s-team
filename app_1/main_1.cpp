@@ -287,6 +287,11 @@ int main(int argc, char* argv[]){
              */
             case 6:
                 {
+                    if(!onCurrentCommit){
+                        cout << "Running automatic checkout for latest commit..." << endl << endl;
+                        miniG->checkout(miniG->getNumOfCommits() - 1);
+                    }
+                    
                     cout << "Quitting program..." << endl << endl;
                     isRunning = false;
                     break;

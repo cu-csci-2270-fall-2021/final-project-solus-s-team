@@ -120,7 +120,7 @@ void MiniGit::rm(string fileName){
 
 
 /*
- *  Purpose; Commits changes made to files in the directory to files in .minigit, and marks which commit ID those files are now associated with
+ *  Purpose; Commits changes made to files in the directory to files in .minigit, and marks which commit message those files are now associated with
  */
 string MiniGit::commit(string msg){
     
@@ -321,7 +321,7 @@ void MiniGit::checkout(int commitID){
 
 
 /*
- *  Purpose; Prints the hash table of commit IDs
+ *  Purpose; Prints the hash table of commit messages and their associated commit IDs
  */
 void MiniGit::printSearchTable(){
      ht->printTable();
@@ -337,7 +337,7 @@ int MiniGit::getNumOfCommits(){
 
 
 /*
- *  Purpose; Returns whether message has been used as a commit ID or not
+ *  Purpose; Returns whether message has been used as a commit message or not
  */
 bool MiniGit::isUnusedMessage(string message){
     
