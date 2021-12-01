@@ -2,20 +2,22 @@
 
 #include<iostream>
 #include<vector>
+#include <filesystem>
 #include "hash.hpp"
 
 using namespace std;
+namespace fs = std::filesystem;
 
 
-enum GITOP {init, add, rm, commit, checkout, status};
+enum GITOP{init, add, rm, commit, checkout, status};
 
-struct FileNode {
+struct FileNode{
     string name;
     int version;
     FileNode* next;
 };
 
-struct BranchNode {
+struct BranchNode{
     int commitID;
     string commitMessage;
     BranchNode* next;
@@ -23,26 +25,29 @@ struct BranchNode {
     FileNode* fileHead;   
 };
 
+
 //*** You can add helper functions if you desire ***//
-class MiniGit {
+class MiniGit{
+    
 private:    
     BranchNode* commitHead;
     int commits;
     HashTable* ht;
     
-   
-
 public:
     MiniGit();
     ~MiniGit();
-
+    
     void init(int hashtablesize);
     void add(string fileName);
     void rm(string fileName);
-    void search(string key);
     string commit(string msg);
-    void checkout(string commitID);
+    void search(string key);
+    void checkout(int commitID);
     void printSearchTable();
     
-    
+    //New Helper Functions, used in main()
+    int getNumOfCommits();
+    bool isUnusedMessage(string message);
+    bool hasFiles();
 };
