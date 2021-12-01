@@ -5,9 +5,9 @@ This project is a simplified version control system called a minigit implemented
 
 # CLASS COMPONENTS
 
---A hidden directory within the active directory created by the class called ".minigit" that is used to store past versions of the files in the repository.
---A doubly linked list (DLL) where each node represents a single commit. Each DLL node contains a string to help identify the commit (commit message), a string to help identify the commit (commit number ID), and a singly linked list (SLL) where each node represents a file in the repository that the program is keeping track of.
---A hash table to store commit message and the commit number IDs associated with them. In this program, the hash table's table size is fixed at 5, but the program to be modified to use a command line argument or user-input to determine the table size.
+1. A hidden directory within the active directory created by the class called ".minigit" that is used to store past versions of the files in the repository.
+2. A doubly linked list (DLL) where each node represents a single commit. Each DLL node contains a string to help identify the commit (commit message), a string to help identify the commit (commit number ID), and a singly linked list (SLL) where each node represents a file in the repository that the program is keeping track of.
+3. A hash table to store commit message and the commit number IDs associated with them. In this program, the hash table's table size is fixed at 5, but the program to be modified to use a command line argument or user-input to determine the table size.
 
 
 # RUNNING MINIGIT
